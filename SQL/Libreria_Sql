@@ -44,9 +44,9 @@ CREATE TABLE Libri_Autori (
 CREATE TABLE Copie (
     idCopia INT AUTO_INCREMENT PRIMARY KEY,
     fk_libro INT(13),
-    casa_editrice VARCHAR(45),
+    casa_editrice VARCHAR(45), //No
     numero_copie INT NOT NULL,
-    is_disponibile TINYINT(1),
+    is_disponibile TINYINT(1), //No
     fk_casa INT,
     FOREIGN KEY (fk_casa) REFERENCES Casa_Editrice(idCasa),
     FOREIGN KEY (fk_libro) REFERENCES Libri(idLibro)
