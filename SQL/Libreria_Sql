@@ -1,0 +1,246 @@
+CREATE DATABASE Libreria;
+USE Libreria;
+
+-- TABELLA AUTORI
+CREATE TABLE Autori (
+    idAutore INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255),
+    cognome VARCHAR(255), 
+    data_nascita DATE,
+    nazionalita VARCHAR(65)
+);
+
+-- TABELLA GENERI
+CREATE TABLE Generi (
+    idGenere INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(45)
+);
+
+-- TABELLA CASA EDITRICE
+CREATE TABLE Casa_Editrice (
+    idCasa INT PRIMARY KEY, 
+    nome VARCHAR(65)
+);
+
+-- TABELLA LIBRI
+CREATE TABLE Libri (
+    idLibro INT(13) PRIMARY KEY,
+    titolo VARCHAR(45),
+    anno DATE,
+    fk_genere INT,
+    FOREIGN KEY (fk_genere) REFERENCES Generi(idGenere)
+);
+
+-- TABELLA LIBRI_AUTORI
+CREATE TABLE Libri_Autori (
+    fk_libro INT(13),
+    fk_autore INT,
+    PRIMARY KEY (fk_libro, fk_autore),
+    FOREIGN KEY (fk_libro) REFERENCES Libri(idLibro),
+    FOREIGN KEY (fk_autore) REFERENCES Autori(idAutore)
+);
+
+-- TABELLA COPIE
+CREATE TABLE Copie (
+    idCopia INT AUTO_INCREMENT PRIMARY KEY,
+    fk_libro INT(13),
+    casa_editrice VARCHAR(45),
+    numero_copie INT NOT NULL,
+    is_disponibile TINYINT(1),
+    fk_casa INT,
+    FOREIGN KEY (fk_casa) REFERENCES Casa_Editrice(idCasa),
+    FOREIGN KEY (fk_libro) REFERENCES Libri(idLibro)
+);
+Alter TABLE Copie 
+drop COLUMN is_disponibile;
+Alter TABLE Copie
+drop COLUMN casa_editrice;
+
+USE Libreria;
+
+-- =====================================
+-- 1. GENERI
+-- =====================================
+
+INSERT INTO Generi (idGenere, nome) VALUES
+(1, 'Fantasy'),
+(2, 'Giallo'),
+(3, 'Romanzo'),
+(4, 'Fantascienza'),
+(5, 'Horror'),
+(6, 'Storico'),
+(7, 'Avventura'),
+(8, 'Biografia');
+
+-- =====================================
+-- 2. CASA EDITRICE
+-- =====================================
+
+INSERT INTO Casa_Editrice (idCasa, nome) VALUES
+(1, 'Mondadori'),
+(2, 'Feltrinelli'),
+(3, 'Laterza'),
+(4, 'Neri Pozza'),
+(5, 'Giunti');
+
+-- =====================================
+-- 3. AUTORI
+-- =====================================
+
+INSERT INTO Autori (idAutore, nome, cognome, data_nascita, nazionalita) VALUES
+(1, 'J.R.R.', 'Tolkien', '1892-01-03', 'Inghilterra'),
+(2, 'Agatha', 'Christie', '1890-09-15', 'Inghilterra'),
+(3, 'George', 'Orwell', '1903-06-25', 'Inghilterra'),
+(4, 'Stephen', 'King', '1947-09-21', 'America'),
+(5, 'Jules', 'Verne', '1828-02-08', 'Francia'),
+(6, 'Dan', 'Brown', '1964-06-22', 'America'),
+(7, 'Italo', 'Calvino', '1923-10-15', 'Italia'),
+(8, 'Umberto', 'Eco', '1932-01-05', 'Italia'),
+(9, 'Jane', 'Austen', '1775-12-16', 'Inghilterra'),
+(10, 'Isaac', 'Asimov', '1920-01-02', 'Russia');
+
+-- =====================================
+-- 4. LIBRI
+-- =====================================
+
+INSERT INTO Libri (idLibro, titolo, anno, fk_genere) VALUES
+(100000001, 'Il Signore degli Anelli', '1954-07-29', 1),
+(100000002, 'Lo Hobbit', '1937-09-21', 1),
+(100000003, 'Assassinio sull Orient Express', '1934-01-01', 2),
+(100000004, '1984', '1949-06-08', 3),
+(100000005, 'La fattoria degli animali', '1945-08-17', 3),
+(100000006, 'IT', '1986-09-15', 5),
+(100000007, 'Shining', '1977-01-28', 5),
+(100000008, 'Viaggio al centro della Terra', '1864-11-25', 7),
+(100000009, 'Ventimila leghe sotto i mari', '1870-06-20', 7),
+(100000010, 'Il codice da Vinci', '2003-03-18', 2),
+(100000011, 'Il barone rampante', '1957-01-01', 3),
+(100000012, 'Il nome della rosa', '1980-01-01', 2),
+(100000013, 'Orgoglio e pregiudizio', '1813-01-28', 3),
+(100000014, 'Fondazione', '1951-06-01', 4),
+(100000015, 'Io robot', '1950-12-02', 4),
+(100000016, 'Dracula', '1897-05-26', 5),
+(100000017, 'Frankenstein', '1818-01-01', 5),
+(100000018, 'Il giro del mondo', '1873-01-01', 7),
+(100000019, 'La coscienza di Zeno', '1923-01-01', 3),
+(100000020, 'Il diario di Anna Frank', '1947-06-25', 8);
+
+-- =====================================
+-- 5. LIBRI_AUTORI
+-- =====================================
+
+INSERT INTO Libri_Autori (fk_libro, fk_autore) VALUES
+(100000001, 1),
+(100000002, 1),
+(100000003, 2),
+(100000004, 3),
+(100000005, 3),
+(100000006, 4),
+(100000007, 4),
+(100000008, 5),
+(100000009, 5),
+(100000010, 6),
+(100000011, 7),
+(100000012, 8),
+(100000013, 9),
+(100000014, 10),
+(100000015, 10),
+(100000016, 4),
+(100000017, 5),
+(100000018, 5),
+(100000019, 7),
+(100000020, 8);
+
+-- =====================================
+-- 6. COPIE
+-- =====================================
+
+INSERT INTO Copie (fk_libro, fk_casa, numero_copie, is_disponibile) VALUES
+(100000001, 2, 12, true),
+(100000002, 1, 0, false),
+(100000003, 4, 11, true),
+(100000004, 3, 4, true),
+(100000005, 5, 12, true),
+(100000006, 2, 3, true),
+(100000007, 1, 0, false),
+(100000008, 4, 0, false),
+(100000009, 3, 3, true),
+(100000010, 5, 5, true),
+(100000011, 2, 8, true),
+(100000012, 1, 0, false),
+(100000013, 4, 13, true),
+(100000014, 3, 12, true),
+(100000015, 1, 9, true),
+(100000016, 4, 0, false),
+(100000017, 5, 0, false),
+(100000018, 5, 9, true),
+(100000019, 2, 7, true),
+(100000020, 1, 0, false);
+
+
+-- =====================================
+-- CONTROLLO DATI INSERITI
+-- =====================================
+
+-- 1° (Mostrare tutti gli autori ordinati per cognome e poi per nome.)
+SELECT * 
+FROM Autori 
+ORDER BY cognome, nome;
+
+-- 2° (Mostrare titolo e anno dei libri pubblicati dopo il 2000.)
+SELECT titolo, anno 
+FROM Libri 
+WHERE YEAR (anno) > 2000;
+
+-- 3° (Trovare gli autori italiani.)
+SELECT * 
+FROM Autori 
+WHERE nazionalita = 'Italia';
+
+-- 4° (Trovare i libri il cui titolo contiene la parola "x" (senza distinguere maiuscole e minuscole).)
+SELECT * 
+FROM Libri 
+WHERE titolo LIKE '%il%';
+
+-- 5° (Elencare le case editrici presenti, senza duplicati.)
+SELECT DISTINCT nome 
+FROM Casa_Editrice;
+
+-- 6° (Mostrare i 5 libri più recenti.)
+SELECT * 
+FROM Libri 
+ORDER BY anno DESC 
+LIMIT 5;
+
+-- 7° (Mostrare ogni libro con il nome del suo genere.)
+SELECT Libri.titolo, Generi.nome 
+FROM Libri  
+JOIN Generi ON Libri.fk_genere = Generi.idGenere;
+
+-- 8° (Mostrare ogni libro con nome e cognome dei suoi autori (passando da libro_autore).)
+SELECT Libri.titolo, Autori.nome, Autori.cognome 
+FROM Libri 
+JOIN Libri_Autori ON Libri.idLibro = Libri_Autori.fk_libro 
+JOIN Autori ON Libri_Autori.fk_autore = Autori.idAutore;
+
+-- 9° (Trovare tutti i libri scritti da un autore dato il suo cognome.)
+SELECT * 
+FROM Libri 
+JOIN Libri_Autori ON Libri.idLibro = Libri_Autori.fk_libro 
+JOIN Autori ON Libri_Autori.fk_autore = Autori.idAutore 
+WHERE Autori.cognome = 'Tolkien';
+
+-- 10° (Trovare i libri di genere "Fantasy" che hanno almeno una copia disponibile.)
+SELECT DISTINCT Libri.titolo 
+FROM Libri  
+JOIN Generi ON Libri.fk_genere = Generi.idGenere 
+JOIN Copie ON Libri.idLibro = Copie.fk_libro 
+WHERE Generi.nome = 'Fantasy' AND Copie.numero_copie > 0;
+
+-- 11° (Mostrare gli autori che hanno scritto almeno un libro di un certo genere, senza duplicati.)
+SELECT DISTINCT Autori.nome, Autori.cognome 
+FROM Autori  
+JOIN Libri_Autori ON Autori.idAutore = Libri_Autori.fk_autore 
+JOIN Libri ON Libri_Autori.fk_libro = Libri.idLibro 
+JOIN Generi ON Libri.fk_genere = Generi.idGenere 
+WHERE Generi.nome = 'Fantasy';
