@@ -65,4 +65,5 @@ public CasaEditrice getCasaEditrice () {
 public void setCasaEditrice (CasaEditrice casaEditrice) {
     this.casaEditrice=casaEditrice;
 }
+
 }
