@@ -1,12 +1,9 @@
 package it.rotech.libreria.model;
 
-import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity 
@@ -18,8 +15,7 @@ public class CasaEditrice {
 private Integer idCasa;
 @Column (name = "nome")
 private String nome;
-@OneToMany(mappedBy = "casaEditrice")
-private Set<Copia> Copie=new HashSet<>();
+
 
 public CasaEditrice () {}
 
@@ -43,12 +39,6 @@ public void setNome (String nome) {
     this.nome=nome;
 }
 
-public Set<Copia> getCopie () {
-    return Copie;
-}
 
-public void setCopie (Set<Copia> Copie) {
-    this.Copie=Copie;
-}
 
 }
