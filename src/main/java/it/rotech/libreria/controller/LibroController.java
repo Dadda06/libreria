@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.model.Libro;
 import it.rotech.libreria.service.LibroService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class LibroController {
     private LibroService libroService;
 
     @GetMapping
-    public List<Libro> getAllLibro() {
+    public List<LibroDTO> getAllLibro() {
         return libroService.findAll();
     }
     
