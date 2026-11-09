@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LibroController {
 
     private LibroService libroService;
+    public LibroController (LibroService libroService) {
+        this.libroService=libroService;
+    }
 
     @GetMapping
     public List<LibroDTO> getAllLibri() {

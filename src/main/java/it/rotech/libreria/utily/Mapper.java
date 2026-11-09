@@ -20,6 +20,7 @@ public class Mapper {
         // 1. Creo l'oggetto di ritorno vuoto
         LibroDTO libroDTO=new LibroDTO();
         //2. Inizializzo le  variabili tramite i setter della classe Libro
+        libroDTO.setId(libro.getId());
         libroDTO.setTitolo(libro.getTitolo());
         libroDTO.setAnno(libro.getAnno());
         libroDTO.setGenere(convertGenereToGenereDTO(libro.getGenere()));
@@ -37,6 +38,7 @@ public class Mapper {
 
     public GenereDTO convertGenereToGenereDTO (Genere genere) {
         GenereDTO genereDTO = new GenereDTO();
+        genereDTO.setId(genere.getId());
         genereDTO.setNome(genere.getNome());
         return genereDTO;
     }
@@ -49,6 +51,7 @@ public class Mapper {
 
     public CopiaDTO convertCopiaToCopiaDTO (Copia copia) {
         CopiaDTO copiaDTO=new CopiaDTO();
+        copiaDTO.setId(copia.getId());
         copiaDTO.setNumeroCopie(copia.getNumeroCopie());
         copiaDTO.setLibroDTO(convertLibroToLibroDTO(copia.getLibro()));
         copiaDTO.setCasaEditriceDTO(convertCasaEditriceToCasaEditriceDTO(copia.getCasaEditrice()));
@@ -65,7 +68,8 @@ public class Mapper {
 
     public CasaEditriceDTO convertCasaEditriceToCasaEditriceDTO (CasaEditrice casaEditrice){
         CasaEditriceDTO casaEditriceDTO= new CasaEditriceDTO();
-        casaEditrice.setNome(casaEditriceDTO.getNome());
+        casaEditriceDTO.setId(casaEditrice.getId());
+        casaEditriceDTO.setNome(casaEditrice.getNome());
         return casaEditriceDTO;
     }
 
@@ -77,6 +81,7 @@ public class Mapper {
 
     public AutoreDTO convertAutoreToAutoreDTO (Autore autore) {
         AutoreDTO autoreDTO = new AutoreDTO();
+        autoreDTO.setId(autore.getId());
         autoreDTO.setNome(autore.getNome());
         autoreDTO.setCognome(autore.getCognome());
         autoreDTO.setDataNascita(autore.getDataNascita());
