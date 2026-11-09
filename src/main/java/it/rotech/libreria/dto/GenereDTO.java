@@ -2,22 +2,17 @@ package it.rotech.libreria.dto;
 
 public class GenereDTO {
 
-    private Integer idGenere;
+    private Integer id;
     private String nome;
     
     public GenereDTO () {}
 
-    public GenereDTO (Integer idGenere, String nome) {
-        this.idGenere=idGenere;
+    public GenereDTO ( String nome) {
         this.nome=nome;
     }
 
-    public Integer getIdGenere () {
-        return idGenere;
-    }
-
-    public void setIdGenere (Integer idGenere) {
-        this.idGenere=idGenere;
+    public Integer getId () {
+        return id;
     }
 
     public String getNome () {

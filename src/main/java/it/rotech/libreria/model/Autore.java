@@ -1,16 +1,12 @@
 package it.rotech.libreria.model;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity 
@@ -20,7 +16,7 @@ public class Autore {
 @Id 
 @GeneratedValue (strategy = GenerationType.IDENTITY)
 @Column (name="idAutore")
-private Integer idAutore;
+private Integer id;
 @Column (name="nome")
 private String nome;
 @Column (name="cognome")
@@ -29,13 +25,6 @@ private String cognome;
 private LocalDate dataNascita;
 @Column (name="nazionalita")
 private String nazionalita;
-@ManyToMany 
-@JoinTable (
-    name = "Libri_Autori",
-    joinColumns = @JoinColumn (name = "fk_libro"),
-    inverseJoinColumns = @JoinColumn (name= "fk_autore")
-)
-private Set<Libro> libro;
 
 public Autore (){}
 
@@ -46,12 +35,12 @@ public Autore (String nome, String cognome, LocalDate dataNascita, String nazion
     this.nazionalita=nazionalita;
 }
 
-public Integer getIdAutore () {
-    return idAutore;
+public Integer getId () {
+    return id;
 }
 
-public void setIdAutore (Integer idAutore) {
-    this.idAutore=idAutore;
+public void setId (Integer id) {
+    this.id=id;
 }
 
 public String getNome () {

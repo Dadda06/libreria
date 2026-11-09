@@ -5,6 +5,8 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -17,8 +19,9 @@ import jakarta.persistence.Table;
     
 public class Libro {
     @Id 
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name="idLibro")
-    private Integer idLibro;
+    private Integer id;
     @Column (name="titolo")
     private String titolo;
     @Column (name = "anno")
@@ -44,12 +47,12 @@ public class Libro {
         this.genere=genere;
     }
     
-    public Integer getIdLibro () {
-        return idLibro;
+    public Integer getId () {
+        return id;
     }
 
-    public void setIdLibro(Integer idLibro){
-        this.idLibro=idLibro;
+    public void setId(Integer id){
+        this.id=id;
     }
 
     public String getTitolo () {

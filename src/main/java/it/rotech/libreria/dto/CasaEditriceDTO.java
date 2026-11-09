@@ -2,22 +2,17 @@ package it.rotech.libreria.dto;
 
 public class CasaEditriceDTO {
 
-    private Integer idCasa;
+    private Integer id;
     private String nome;
 
     public CasaEditriceDTO () {}
 
-public CasaEditriceDTO (Integer idCasa, String nome) {
-    this.idCasa=idCasa;
+public CasaEditriceDTO (String nome) {
     this.nome=nome;
 }
 
-public Integer getIdCasa () {
-    return idCasa;
-}
-
-public void setIdCasa (Integer idCasa) {
-    this.idCasa=idCasa;
+public Integer getId () {
+    return id;
 }
 
 public String getNome () {

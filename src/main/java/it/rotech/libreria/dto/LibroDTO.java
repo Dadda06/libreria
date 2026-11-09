@@ -2,30 +2,24 @@ package it.rotech.libreria.dto;
 
 import java.time.LocalDate;
 
-import it.rotech.libreria.model.Genere;
 
 public class LibroDTO {
 
-    private Integer idLibro;
+    private Integer id;
     private String titolo;
     private LocalDate anno;
-    private Genere genere;
+    private GenereDTO genere;
 
     public LibroDTO () {}
     
-    public LibroDTO (Integer idLibro, String titolo, LocalDate anno, Genere genere) {
-        this.idLibro=idLibro;
+    public LibroDTO (String titolo, LocalDate anno, GenereDTO genere) {
         this.titolo=titolo;
         this.anno=anno;
         this.genere=genere;
     }
 
-    public Integer getIdLibro () {
-        return idLibro;
-    }
-
-    public void setIdLibro(Integer idLibro){
-        this.idLibro=idLibro;
+    public Integer getId () {
+        return id;
     }
 
     public String getTitolo () {
@@ -44,11 +38,11 @@ public class LibroDTO {
         this.anno=anno;
     }
 
-    public Genere getGenere () {
+    public GenereDTO getGenere () {
         return genere;
     }
 
-    public void setGenere (Genere genere) {
+    public void setGenere (GenereDTO genere) {
         this.genere=genere;
     }
 

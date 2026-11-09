@@ -14,7 +14,7 @@ public class Genere {
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name="idGenere")
-    private Integer idGenere;
+    private Integer id;
     @Column (name="nome")
     private String nome;
 
@@ -24,12 +24,12 @@ public class Genere {
         this.nome=nome;
     }
 
-    public Integer getIdGenere () {
-        return idGenere;
+    public Integer getId () {
+        return id;
     }
 
-    public void setIdGenere (Integer idGenere) {
-        this.idGenere=idGenere;
+    public void setId (Integer id) {
+        this.id=id;
     }
 
     public String getNome () {

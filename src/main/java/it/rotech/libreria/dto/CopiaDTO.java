@@ -1,31 +1,24 @@
 package it.rotech.libreria.dto;
 
-import it.rotech.libreria.model.CasaEditrice;
-import it.rotech.libreria.model.Libro;
 
 public class CopiaDTO {
 
-    private Integer idCopia;
+    private Integer id;
     private Integer numeroCopie;
-    private Libro libro;
-    private CasaEditrice casaEditrice;
+    private LibroDTO libro;
+    private CasaEditriceDTO casaEditrice;
     
     public CopiaDTO () {}
 
-public CopiaDTO (Integer idCopia, Integer numeroCopie, Libro libro, CasaEditrice casaEditrice) {
-    this.idCopia=idCopia;
+public CopiaDTO (Integer numeroCopie, LibroDTO libro, CasaEditriceDTO casaEditrice) {
     this.numeroCopie=numeroCopie;
     this.libro=libro;
     this.casaEditrice=casaEditrice;
 }
 
-public Integer getIdCopia () {
-    return idCopia;
+public Integer getId () {
+    return id;
 }
-
-public void setIdCopia (Integer idCopia) {
-    this.idCopia=idCopia;
-} 
 
 public Integer getNumeroCopie () {
     return numeroCopie;
@@ -35,19 +28,19 @@ public void setNumeroCopie (Integer numeroCopie) {
     this.numeroCopie=numeroCopie;
 }
 
-public Libro getLibro () {
+public LibroDTO getLibro () {
     return libro;
 }
 
-public void setLibro (Libro libro) {
+public void setLibroDTO (LibroDTO libro) {
     this.libro=libro;
 }
 
-public CasaEditrice getCasaEditrice () {
+public CasaEditriceDTO getCasaEditrice () {
     return casaEditrice;
 }
 
-public void setCasaEditrice (CasaEditrice casaEditrice) {
+public void setCasaEditriceDTO (CasaEditriceDTO casaEditrice) {
     this.casaEditrice=casaEditrice;
 }
 

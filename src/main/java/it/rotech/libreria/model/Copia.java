@@ -16,7 +16,7 @@ public class Copia {
 @Id 
 @Column (name = "idCopia")
 @GeneratedValue (strategy = GenerationType.IDENTITY)
-private Integer idCopia;
+private Integer id;
 @Column (name = "numero_copie")
 private Integer numeroCopie;
 @ManyToOne
@@ -34,12 +34,12 @@ public Copia (Integer numeroCopie, Libro libro, CasaEditrice casaEditrice) {
     this.casaEditrice=casaEditrice;
 }
 
-public Integer getIdCopia () {
-    return idCopia;
+public Integer getId() {
+    return id;
 }
 
-public void setIdCopia (Integer idCopia) {
-    this.idCopia=idCopia;
+public void setId (Integer id) {
+    this.id=id;
 } 
 
 public Integer getNumeroCopie () {

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class AutoreDTO {
 
-    private Integer idAutore;
+    private Integer id;
     private String nome;
     private String cognome;
     private LocalDate dataNascita;
@@ -12,20 +12,15 @@ public class AutoreDTO {
 
     public AutoreDTO (){}
 
-public AutoreDTO (Integer idAutore, String nome, String cognome, LocalDate dataNascita, String nazionalita) {
-    this.idAutore=idAutore;
+public AutoreDTO (String nome, String cognome, LocalDate dataNascita, String nazionalita) {
     this.nome=nome;
     this.cognome=cognome;
     this.dataNascita=dataNascita;
     this.nazionalita=nazionalita;
 }
 
-public Integer getIdAutore () {
-    return idAutore;
-}
-
-public void setIdAutore (Integer idAutore) {
-    this.idAutore=idAutore;
+public Integer getId () {
+    return id;
 }
 
 public String getNome () {
