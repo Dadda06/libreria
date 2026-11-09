@@ -12,8 +12,8 @@ import it.rotech.libreria.utily.Mapper;
 
 @Service 
 public class LibroService {
-   private final LibroRepository libroRepository;
-private final Mapper mapper;
+    private final LibroRepository libroRepository;
+    private final Mapper mapper;
 
    
 
@@ -32,4 +32,9 @@ private final Mapper mapper;
         }
         return risultatoDTO;
     } 
+
+    public LibroDTO findById(Integer id) {
+    Libro libro = libroRepository.findById(id).orElseThrow(() -> new RuntimeException("Libro non trovato con ID: " + id));
+    return mapper.convertLibroToLibroDTO(libro);
+    }
 }

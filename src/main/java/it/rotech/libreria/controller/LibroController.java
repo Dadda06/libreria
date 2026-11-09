@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.service.LibroService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController 
@@ -22,6 +23,11 @@ public class LibroController {
     @GetMapping
     public List<LibroDTO> getAllLibri() {
         return libroService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public LibroDTO getLibroById(@PathVariable Integer id) {
+        return libroService.findById(id);
     }
     
 }
