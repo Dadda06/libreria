@@ -1,6 +1,8 @@
 package it.rotech.libreria.dto;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class LibroDTO {
@@ -9,13 +11,15 @@ public class LibroDTO {
     private String titolo;
     private LocalDate anno;
     private GenereDTO genere;
+    private Set<AutoreDTO> autori = new HashSet<>();
 
     public LibroDTO () {}
     
-    public LibroDTO (String titolo, LocalDate anno, GenereDTO genere) {
+    public LibroDTO (String titolo, LocalDate anno, GenereDTO genere, Set<AutoreDTO> autori) {
         this.titolo=titolo;
         this.anno=anno;
         this.genere=genere;
+        this.autori=autori;
     }
 
     public Integer getId () {
@@ -50,5 +54,11 @@ public class LibroDTO {
         this.genere=genere;
     }
 
+    public Set<AutoreDTO> getAutori () {
+        return autori;
+    }
 
+    public void setAutori (Set<AutoreDTO> autori) {
+        this.autori=autori;
+    }
 }

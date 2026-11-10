@@ -26,6 +26,12 @@ private LocalDate dataNascita;
 @Column (name="nazionalita")
 private String nazionalita;
 
+@Override
+public String toString() {
+    return "Autore [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita
+            + ", nazionalita=" + nazionalita + "]";
+}
+
 public Autore (){}
 
 public Autore (String nome, String cognome, LocalDate dataNascita, String nazionalita) {

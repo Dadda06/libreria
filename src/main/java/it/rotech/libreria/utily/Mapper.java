@@ -24,6 +24,8 @@ public class Mapper {
         libroDTO.setTitolo(libro.getTitolo());
         libroDTO.setAnno(libro.getAnno());
         libroDTO.setGenere(convertGenereToGenereDTO(libro.getGenere()));
+        for(Autore autore:libro.getAutori())
+            libroDTO.getAutori().add(convertAutoreToAutoreDTO(autore));
         // 3. Ritorno l'oggetto inizializzato
         return libroDTO;
     }
@@ -33,6 +35,8 @@ public class Mapper {
         libro.setTitolo(libroDTO.getTitolo());
         libro.setAnno(libroDTO.getAnno());
         libro.setGenere(convertGenereDTOToGenere(libroDTO.getGenere()));
+       for(AutoreDTO autoreDTO:libroDTO.getAutori())
+            libro.getAutori().add(convertAutoreDTOToAutore(autoreDTO));
         return libro;
     }
 

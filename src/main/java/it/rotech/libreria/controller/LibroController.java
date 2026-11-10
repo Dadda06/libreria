@@ -1,14 +1,22 @@
 package it.rotech.libreria.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.service.LibroService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController 
@@ -25,9 +33,27 @@ public class LibroController {
         return libroService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id:{id}")
     public LibroDTO getLibroById(@PathVariable Integer id) {
         return libroService.findById(id);
+    }
+
+    @GetMapping("/titolo:{titolo}")
+    public List<LibroDTO> getLibroByTitolo(@PathVariable String titolo) {
+        return libroService.findAllByTitolo(titolo);
+    }
+
+    @PostMapping
+    public LibroDTO addLibro(@RequestParam String titolo,@RequestParam LocalDate anno,@RequestParam String nomeG,@RequestParam String nomeA,@RequestParam String cognomeA) {
+        return libroService.addLibro(titolo, anno, nomeG, nomeA, cognomeA );
+    }
+    @PutMapping("/id:{id}")
+    public LibroDTO modificaLibro(@PathVariable Integer id,@RequestParam String titolo,@RequestParam LocalDate anno,@RequestParam String nomeG,@RequestParam String nomeA,@RequestParam String cognomeA){
+        return libroService.modificaLibro(id,titolo,anno,nomeG,nomeA,cognomeA);
+    } 
+    @DeleteMapping ("/id:{id}")
+    public void deleteLibro(@PathVariable Integer id) {
+        libroService.deleteLibro(id);
     }
     
 }

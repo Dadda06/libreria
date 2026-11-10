@@ -36,15 +36,16 @@ public class Libro {
         joinColumns = @JoinColumn (name = "fk_libro"),
         inverseJoinColumns = @JoinColumn (name= "fk_autore")
     )
-    private Set<Autore> autore;
+    private Set<Autore> autori;
 
 
     public Libro (){}
 
-    public Libro (String titolo, LocalDate anno, Genere genere) {
+    public Libro (String titolo, LocalDate anno, Genere genere, Set<Autore> autori) {
         this.titolo=titolo;
         this.anno=anno;
         this.genere=genere;
+        this.autori=autori;
     }
     
     public Integer getId () {
@@ -77,6 +78,14 @@ public class Libro {
 
     public void setGenere (Genere genere) {
         this.genere=genere;
+    }
+
+    public Set<Autore> getAutori() {
+        return autori;
+    }
+
+    public void setAutori(Set<Autore> autori) {
+        this.autori = autori;
     }
 
 }
