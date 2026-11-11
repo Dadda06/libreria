@@ -8,5 +8,5 @@ import it.rotech.libreria.model.Libro;
 
 public interface LibroRepository extends JpaRepository<Libro, Integer> {
 
-    List<Libro> findByTitoloContainingIgnoreCase(String titolo);
+    List<Libro> findAllByTitoloContainingIgnoreCase(String titolo);
 }

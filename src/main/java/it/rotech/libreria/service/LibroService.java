@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import it.rotech.libreria.dto.LibroDTO;
+import it.rotech.libreria.dto.Request.LibroRequest;
 import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.Genere;
 import it.rotech.libreria.model.Libro;
@@ -52,7 +53,7 @@ public class LibroService {
     }
 
     public List<LibroDTO> findAllByTitolo(String titolo) {
-        List<Libro> risultato = libroRepository.findByTitoloContainingIgnoreCase(titolo);
+        List<Libro> risultato = libroRepository.findAllByTitoloContainingIgnoreCase(titolo);
         List<LibroDTO> risultatoDTO = new ArrayList<>();
 
         for (Libro libro : risultato) {
@@ -62,8 +63,14 @@ public class LibroService {
         return risultatoDTO;
     }
 
-    public LibroDTO addLibro(String titolo, LocalDate anno, String nomeG, String nomeA, String cognomeA) {
+    public LibroDTO addLibro(LibroRequest libroRequest) {
         // devo inizializzare i vari punti che mi servono per aggiungere un libro
+        String titolo = libroRequest.getTitolo();
+        LocalDate anno= libroRequest.getAnno();
+        String nomeG= libroRequest.getNomeGenere();
+        String nomeA= libroRequest.getNomeAutore();
+        String cognomeA=libroRequest.getCognomeAutore();
+
         Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG);
 
         List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
@@ -74,6 +81,7 @@ public class LibroService {
         if (autoriDB.isEmpty())
             throw new RuntimeException("Autore non trovato, creare prima l'Autore!");
         Set<Autore> autori = new HashSet<>(autoriDB);
+        
         Libro libroSalvato = new Libro(titolo, anno, genere, autori);
         return mapper.convertLibroToLibroDTO(libroRepository.save(libroSalvato));
     }
@@ -82,8 +90,13 @@ public class LibroService {
         libroRepository.deleteById(id);
     }
 
-    public LibroDTO modificaLibro(Integer idLibro, String titolo, LocalDate anno, String nomeG, String nomeA, String cognomeA) {
+    public LibroDTO modificaLibro(LibroRequest libroRequest, Integer idLibro) {
         // Vedo se il libro esiste
+        String titolo = libroRequest.getTitolo();
+        LocalDate anno= libroRequest.getAnno();
+        String nomeG= libroRequest.getNomeGenere();
+        String nomeA= libroRequest.getNomeAutore();
+        String cognomeA=libroRequest.getCognomeAutore();
         Libro libro =libroRepository.findById(idLibro).orElseThrow(()->new RuntimeException("Libro con id "+idLibro + " non trovato."));
         Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG);
         List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
