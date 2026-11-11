@@ -2,11 +2,9 @@ package it.rotech.libreria.dto.Request;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LibroRequest {
     private String titolo;
-    
     private LocalDate anno;
     private String nomeGenere;
     private String nomeAutore;

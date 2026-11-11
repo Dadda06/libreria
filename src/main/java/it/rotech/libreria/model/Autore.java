@@ -2,6 +2,7 @@ package it.rotech.libreria.model;
 
 import java.time.LocalDate;
 
+import it.rotech.libreria.dto.Request.AutoreRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,13 @@ public String toString() {
 }
 
 public Autore (){}
+
+public Autore (AutoreRequest autoreRequest){
+    this.nome=autoreRequest.getNome();
+    this.cognome=autoreRequest.getCognome();
+    this.dataNascita=autoreRequest.getDataNascita();
+    this.nazionalita=autoreRequest.getNazionalita();
+}
 
 public Autore (String nome, String cognome, LocalDate dataNascita, String nazionalita) {
     this.nome=nome;

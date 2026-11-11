@@ -1,11 +1,14 @@
 package it.rotech.libreria.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import it.rotech.libreria.dto.CopiaDTO;
+import it.rotech.libreria.dto.Request.CopiaRequest;
+import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.CasaEditrice;
 import it.rotech.libreria.model.Copia;
 import it.rotech.libreria.model.Libro;
@@ -43,9 +46,31 @@ public class CopiaService {
         return mapper.convertCopiaToCopiaDTO(copia);
     }
 
-    // public CopiaDTO addCopia (Integer numCopie, String titoloLibro, String casa){
-    //     Lis libro = libroRepository.findAllByTitoloContainingIgnoreCase(titoloLibro);
-    //     List <CasaEditrice> casaDB = casaEditriceRepository.findAllByNome(casa);
+     public CopiaDTO addCopia (CopiaRequest copiaRequest){
+        Integer numCopie= copiaRequest.getNumCopie();
+        Integer idlibro= copiaRequest.getidLibro();
+        String casa= copiaRequest.getCasa();
+        Libro libro = libroRepository.findById(idlibro).orElseThrow(()-> new RuntimeException("Libro non esistente!"));
+        List <CasaEditrice> casaDB = casaEditriceRepository.findAllByNome(casa);
+            if (casaDB.isEmpty())
+            throw new RuntimeException("Casa Editrice non trovata, creare prima la Casa!");
 
-    // }
+        Copia copiaSalvata = new Copia(numCopie, libro, casaDB.getLast());
+        return mapper.convertCopiaToCopiaDTO(copiaSalvata);
+     }
+
+    public CopiaDTO updateCopia (CopiaRequest copiaRequest, Integer id) {
+        Integer numCopie= copiaRequest.getNumCopie();
+        Integer idlibro= copiaRequest.getidLibro();
+        String casa= copiaRequest.getCasa();
+        Copia copia=copiaRepository.findById(id).orElseThrow(()-> new RuntimeException("Copia non esistente"));
+        copia.setNumeroCopie(numCopie);
+        copia.setLibro(libroRepository.findById(idlibro).orElseThrow(()-> new RuntimeException("Libro non trovato!")));
+        copia.setCasaEditrice(casaEditriceRepository.findAllByNome(casa).getLast());
+        return mapper.convertCopiaToCopiaDTO(copiaRepository.save(copia));
+    }
+
+    public void deleteCopia (Integer id){
+        copiaRepository.deleteById(id);
+    }
 }
