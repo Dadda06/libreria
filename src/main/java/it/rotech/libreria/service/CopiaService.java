@@ -1,14 +1,12 @@
 package it.rotech.libreria.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import it.rotech.libreria.dto.CopiaDTO;
 import it.rotech.libreria.dto.Request.CopiaRequest;
-import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.CasaEditrice;
 import it.rotech.libreria.model.Copia;
 import it.rotech.libreria.model.Libro;

@@ -22,4 +22,8 @@ public class GenereService {
         Genere genereSalvato = new Genere(nome);
         return mapper.convertGenereToGenereDTO(genereRepository.save(genereSalvato));
     }
+
+    public void deleteGenere (Integer id){
+        genereRepository.deleteById(id);
+    }
 }
