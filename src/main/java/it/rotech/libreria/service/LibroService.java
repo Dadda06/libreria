@@ -103,7 +103,6 @@ public class LibroService {
         // L'Optional di una lista non può funzionare perché il database
         // risponde comunque con una lista ma vuota. Devo gestire l'eccezione
         // manualmente.
-
         if (autoriDB.isEmpty())
             throw new RuntimeException("Autore non trovato, creare prima l'Autore!");
         Set<Autore> autori = new HashSet<>(autoriDB);
