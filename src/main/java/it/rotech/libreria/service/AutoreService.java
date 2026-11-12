@@ -63,15 +63,13 @@ public class AutoreService {
         autoreRepository.deleteById(id);
     }
 
-    public AutoreDTO findAllByNomeECognome(String nome, String cognome){
+     public List<AutoreDTO> findByNomeECognome(String nome, String cognome){
         List<Autore> risultato = autoreRepository.findAllByNomeAndCognome(nome, cognome);
         List<AutoreDTO> risultatoDTO = new ArrayList<>();
-    
         for (Autore autore : risultato) {
             risultatoDTO.add(mapper.convertAutoreToAutoreDTO(autore));
         } 
-    
-        return risultatoDTO; 
-}
+        return risultatoDTO;
+    }
 
 }

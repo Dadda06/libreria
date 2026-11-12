@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.rotech.libreria.dto.AutoreDTO;
@@ -48,4 +49,8 @@ public class AutoreController {
         autoreService.deleteAutore(id);
     }
 
+    @GetMapping("/find/{nome}/{cognome}")
+    public List<AutoreDTO> findAutoreNeC(@PathVariable  String nome,@PathVariable  String cognome) {
+        return autoreService.findByNomeECognome(nome, cognome);
+    }
 }

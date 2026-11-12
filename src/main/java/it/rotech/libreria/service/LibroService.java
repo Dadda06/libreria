@@ -71,7 +71,9 @@ public class LibroService {
         String nomeA= libroRequest.getNomeAutore();
         String cognomeA=libroRequest.getCognomeAutore();
 
-        Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG);
+        Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG)
+            .orElseThrow(() -> new RuntimeException("Genere non trovato, aggiungere genere prima!"));  
+             
 
         List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
         // L'Optional di una lista non può funzionare perché il database
@@ -98,7 +100,7 @@ public class LibroService {
         String nomeA= libroRequest.getNomeAutore();
         String cognomeA=libroRequest.getCognomeAutore();
         Libro libro =libroRepository.findById(idLibro).orElseThrow(()->new RuntimeException("Libro con id "+idLibro + " non trovato."));
-        Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG);
+        Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG).orElseThrow(() -> new RuntimeException("Genere non trovato, aggiungere genere prima!"));
         List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
         // L'Optional di una lista non può funzionare perché il database
         // risponde comunque con una lista ma vuota. Devo gestire l'eccezione
