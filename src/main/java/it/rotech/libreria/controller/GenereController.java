@@ -7,7 +7,10 @@ import it.rotech.libreria.dto.GenereDTO;
 import it.rotech.libreria.dto.Request.GenereRequest;
 import it.rotech.libreria.service.GenereService;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +32,15 @@ public class GenereController {
     @DeleteMapping("/id:{id}")
     public void deleteGenere(@PathVariable Integer id){
         genereService.deleteGenere(id);
+    }
+    
+    @GetMapping
+    public List<GenereDTO> getAll(){
+        return genereService.findAll();
+    }
+
+    @GetMapping("/nome:{nome}")
+    public List<GenereDTO> getByNome(@PathVariable String nome) {
+        return genereService.findByNome(nome);
     }
 }

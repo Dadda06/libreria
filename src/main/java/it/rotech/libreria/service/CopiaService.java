@@ -54,7 +54,7 @@ public class CopiaService {
             throw new RuntimeException("Casa Editrice non trovata, creare prima la Casa!");
 
         Copia copiaSalvata = new Copia(numCopie, libro, casaDB.getLast());
-        return mapper.convertCopiaToCopiaDTO(copiaSalvata);
+        return mapper.convertCopiaToCopiaDTO(copiaRepository.save(copiaSalvata));
      }
 
     public CopiaDTO updateCopia (CopiaRequest copiaRequest, Integer id) {

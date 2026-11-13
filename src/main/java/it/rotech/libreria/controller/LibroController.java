@@ -1,6 +1,5 @@
 package it.rotech.libreria.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -49,13 +47,24 @@ public class LibroController {
     public LibroDTO addLibro(@RequestBody LibroRequest libroRequest) {
         return libroService.addLibro(libroRequest);
     }
+
     @PutMapping("/id:{id}")
     public LibroDTO modificaLibro(@RequestBody LibroRequest libroRequest,@PathVariable  Integer id){
         return libroService.modificaLibro(libroRequest, id);
-    } 
+    }
+
     @DeleteMapping ("/id:{id}")
     public void deleteLibro(@PathVariable Integer id) {
-        libroService.deleteLibro(id);
+        libroService.deleteLibroAndCopie(id);
     }
-    
+
+    @GetMapping("/genere:{nomeG}")
+    public List<LibroDTO> getLibroByGenere(@PathVariable String nomeG) {
+        return libroService.findByGenere(nomeG);
+    }
+
+    @GetMapping("/autore/nome:{nomeA}/cognome:{cognomeA}")
+    public List<LibroDTO> getLibroByAutore(@PathVariable String nomeA, @PathVariable String cognomeA){
+        return libroService.findByAutore(nomeA, cognomeA);
+    }
 }

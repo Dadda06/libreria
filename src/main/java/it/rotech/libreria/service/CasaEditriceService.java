@@ -1,5 +1,8 @@
 package it.rotech.libreria.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import it.rotech.libreria.dto.CasaEditriceDTO;
@@ -28,4 +31,21 @@ public class CasaEditriceService {
         casaEditriceRepository.deleteById(id);
     }
 
+    public List<CasaEditriceDTO> findAll(){
+        List<CasaEditrice> risultato = casaEditriceRepository.findAll();
+        List<CasaEditriceDTO> risultatoDTO = new ArrayList<>();
+        for (CasaEditrice casaEditrice : risultato){
+            risultatoDTO.add(mapper.convertCasaEditriceToCasaEditriceDTO(casaEditrice));
+        }
+        return risultatoDTO;
+    }
+
+    public List<CasaEditriceDTO> findByNome(String nome){
+        List<CasaEditrice> risultato=casaEditriceRepository.findAllByNome(nome);
+        List<CasaEditriceDTO> risultatoDTO=new ArrayList<>();
+        for (CasaEditrice casaEditrice: risultato){
+            risultatoDTO.add(mapper.convertCasaEditriceToCasaEditriceDTO(casaEditrice));
+        }
+        return risultatoDTO;
+    }
 }

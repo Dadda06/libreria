@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.rotech.libreria.dto.AutoreDTO;
 import it.rotech.libreria.dto.Request.AutoreRequest;
@@ -59,7 +60,9 @@ public class AutoreService {
         return mapper.convertAutoreToAutoreDTO(autoreRepository.save(autore));
     }
 
+    @Transactional 
     public void deleteAutore(Integer id){
+        autoreRepository.deleteAutoreFromLibriAutori(id);
         autoreRepository.deleteById(id);
     }
 
