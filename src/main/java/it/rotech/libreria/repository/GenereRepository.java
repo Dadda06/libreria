@@ -11,7 +11,7 @@ import it.rotech.libreria.model.Genere;
 
 public interface GenereRepository extends JpaRepository<Genere, Integer> {
 
-    Optional<Genere> findByNomeContainingIgnoreCase(String nomeG);
+    Optional<Genere> findByNomeIgnoreCase(String nomeG);
     List <Genere> findAllByNome(String nome);
     
 

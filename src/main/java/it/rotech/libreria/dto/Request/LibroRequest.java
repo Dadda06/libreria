@@ -1,23 +1,22 @@
 package it.rotech.libreria.dto.Request;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class LibroRequest {
     private String titolo;
     private LocalDate anno;
     private String nomeGenere;
-    private String nomeAutore;
-    private String cognomeAutore;
+    private List<AutoreRequest> autori;
 
     public LibroRequest() {}
 
-    public LibroRequest (String titolo, LocalDate anno, String nomeGenere, String nomeAutore, String cognomeAutore) {
+    public LibroRequest (String titolo, LocalDate anno, String nomeGenere, List<AutoreRequest> autori) {
         this.titolo=titolo;
         this.anno=anno;
         this.nomeGenere=nomeGenere;
-        this.nomeAutore=nomeAutore;
-        this.cognomeAutore=cognomeAutore;
+        this.autori=autori;
     }
 
     public String getTitolo () {
@@ -44,20 +43,12 @@ public class LibroRequest {
         this.nomeGenere=nomeGenere;
     }
 
-    public String getNomeAutore () {
-        return nomeAutore;
+    public List<AutoreRequest> getAutori() {
+        return autori;
     }
 
-    public void setNomeAutore (String nomeAutore) {
-        this.nomeAutore=nomeAutore;
-    }
-
-    public String getCognomeAutore () {
-        return cognomeAutore;
-    }
-
-    public void setCognomeAutore (String cognomeAutore) {
-        this.cognomeAutore=cognomeAutore;
+    public void setAutori (List<AutoreRequest> autori) {
+        this.autori=autori;
     }
     
 }

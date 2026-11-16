@@ -25,4 +25,6 @@ public interface LibroRepository extends JpaRepository<Libro, Integer> {
     List<Libro> findByAutoreNative(@Param("nome") String nome, @Param("cognome") String cognome);
 
     List<Libro> findByGenere_Id(Integer genereId);
+
+    boolean existsByTitoloIgnoreCase(String titolo);
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.rotech.libreria.dto.LibroDTO;
+import it.rotech.libreria.dto.Request.AutoreRequest;
 import it.rotech.libreria.dto.Request.LibroRequest;
 import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.Genere;
@@ -34,7 +35,7 @@ public class LibroService {
         this.mapper = mapper;
         this.genereRepository = genereRepository;
         this.autoreRepository = autoreRepository;
-        this.copiaRepository=copiaRepository;
+        this.copiaRepository = copiaRepository;
     }
 
     public List<LibroDTO> findAll() {
@@ -66,95 +67,151 @@ public class LibroService {
         return risultatoDTO;
     }
 
-    @Transactional 
+    @Transactional
     public LibroDTO addLibro(LibroRequest libroRequest) {
         // devo inizializzare i vari punti che mi servono per aggiungere un libro
         String titolo = libroRequest.getTitolo();
-        LocalDate anno= libroRequest.getAnno();
-        String nomeG= libroRequest.getNomeGenere();
-        String nomeA= libroRequest.getNomeAutore();
-        String cognomeA=libroRequest.getCognomeAutore();
+        if (libroRepository.existsByTitoloIgnoreCase(titolo)) {
+            throw new RuntimeException("Un libro con il titolo: " + titolo + ", esiste già nel database!");
+        }
 
-        //GENERE: Se esiste lo prende, altrimenti lo crea e lo salva 
-        Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG)
-            .orElseGet(() -> {
-                Genere nuovoGenere = new Genere(nomeG); 
-                return genereRepository.save(nuovoGenere);
-            });
+        LocalDate anno = libroRequest.getAnno();
+        String nomeG = libroRequest.getNomeGenere();
 
-        //AUTORE: Cerca se esiste già nel DB
-        List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
+        // GENERE: Se esiste lo prende, altrimenti lo crea e lo salva
+        Genere genere = genereRepository.findByNomeIgnoreCase(nomeG)
+                .orElseGet(() -> {
+                    Genere nuovoGenere = new Genere(nomeG);
+                    return genereRepository.save(nuovoGenere);
+                });
+
+        // AUTORE:
         // L'Optional di una lista non può funzionare perché il database
         // risponde comunque con una lista ma vuota. Devo gestire l'eccezione
         // manualmente.
 
-        Set<Autore> autori= new HashSet<>();
-        // Se non esiste, lo crea e lo salva 
-        if (autoriDB.isEmpty()){
-           Autore nuovoAutore = new Autore(); 
-            Autore autoreSalvato = autoreRepository.save(nuovoAutore);
-            autori.add(autoreSalvato);
-        } else {
-            // Se esiste, usa quello trovato
-            autori.addAll(autoriDB);
+        Set<Autore> autori = new HashSet<>();
+        if (libroRequest.getAutori() != null) {
+            for (AutoreRequest autoreRequest : libroRequest.getAutori()) {
+                String nomeA = autoreRequest.getNome();
+                String cognomeA = autoreRequest.getCognome();
+                // Cerca se esiste già nel DB
+                List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
+
+                // Se non esiste, lo crea e lo salva
+                if (autoriDB.isEmpty()) {
+                    Autore nuovoAutore = new Autore();
+                    nuovoAutore.setNome(nomeA);
+                    nuovoAutore.setCognome(cognomeA);
+                    nuovoAutore.setDataNascita(autoreRequest.getDataNascita());
+                    nuovoAutore.setNazionalita(autoreRequest.getNazionalita());
+                    Autore autoreSalvato = autoreRepository.save(nuovoAutore);
+                    autori.add(autoreSalvato);
+                } else {
+                    // Se esiste, usa quello trovato
+                    autori.addAll(autoriDB);
+                }
+            }
         }
-        
+
         Libro libroSalvato = new Libro(titolo, anno, genere, autori);
         return mapper.convertLibroToLibroDTO(libroRepository.save(libroSalvato));
+
+        /*Scriverlo così:
+        {
+        "titolo":"Vieni dalle Favelas!2",
+        "anno":"2026-11-16",
+        "nomeGenere":"Giallo",
+        "autori" : [{
+            "nome":"Simone",
+            "cognome":"Volpe",
+            "dataNascita":"1994-03-12",
+            "nazionalita":"Australiano"
+            }]
+
+        }
+        */
+
     }
 
-    //Elimino il libro, ma prima se ci sono copie di questo libro elimino prima loro
-    @Transactional 
+    // Elimino il libro, ma prima se ci sono copie di questo libro elimino prima
+    // loro
+    @Transactional
     public void deleteLibroAndCopie(Integer id) {
-        //devo vedere se ci sono copie del libro che voglio eliminare
-        Libro libro = libroRepository.findById(id).orElseThrow(()-> new RuntimeException("Libro non trovato!"));
+        // devo vedere se ci sono copie del libro che voglio eliminare
+        Libro libro = libroRepository.findById(id).orElseThrow(() -> new RuntimeException("Libro non trovato!"));
         copiaRepository.deleteByLibro(libro);
-        libro.getAutori().clear(); //me lo gestisce hibernate, non io io come nelle @Native Query
+        libro.getAutori().clear(); // me lo gestisce hibernate, non io io come nelle @Native Query
         libroRepository.deleteById(id);
     }
 
     public LibroDTO modificaLibro(LibroRequest libroRequest, Integer idLibro) {
         // Vedo se il libro esiste
         String titolo = libroRequest.getTitolo();
-        LocalDate anno= libroRequest.getAnno();
-        String nomeG= libroRequest.getNomeGenere();
-        String nomeA= libroRequest.getNomeAutore();
-        String cognomeA=libroRequest.getCognomeAutore();
-        Libro libro =libroRepository.findById(idLibro).orElseThrow(()->new RuntimeException("Libro con id "+idLibro + " non trovato."));
-        Genere genere = genereRepository.findByNomeContainingIgnoreCase(nomeG).orElseThrow(() -> new RuntimeException("Genere non trovato, aggiungere genere prima!"));
-        List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
+        LocalDate anno = libroRequest.getAnno();
+        String nomeG = libroRequest.getNomeGenere();
+
+        Libro libro = libroRepository.findById(idLibro)
+                .orElseThrow(() -> new RuntimeException("Libro con id " + idLibro + " non trovato."));
+        //GENERE:
+        Genere genere = genereRepository.findByNomeIgnoreCase(nomeG)
+                .orElseThrow(() -> new RuntimeException("Genere non trovato, aggiungere genere prima!"));
+        
+        //AUTORE:
+        Set<Autore> autori = new HashSet<>();
+        if (libroRequest.getAutori() != null) {
+            for (AutoreRequest autoreRequest : libroRequest.getAutori()) {
+                String nomeA = autoreRequest.getNome();
+                String cognomeA = autoreRequest.getCognome();
+        
+                List<Autore> autoriDB = autoreRepository.findAllByNomeAndCognome(nomeA, cognomeA);
         // L'Optional di una lista non può funzionare perché il database
         // risponde comunque con una lista ma vuota. Devo gestire l'eccezione
         // manualmente.
-        if (autoriDB.isEmpty())
-            throw new RuntimeException("Autore non trovato, creare prima l'Autore!");
-        Set<Autore> autori = new HashSet<>(autoriDB);
+                if (autoriDB.isEmpty()) {
+                    // Se non esiste, lo creiamo e salviamo con tutti i suoi dati
+                    Autore nuovoAutore = new Autore();
+                    nuovoAutore.setNome(nomeA);
+                    nuovoAutore.setCognome(cognomeA);
+                    nuovoAutore.setDataNascita(autoreRequest.getDataNascita());
+                    nuovoAutore.setNazionalita(autoreRequest.getNazionalita());
+                    
+                    Autore autoreSalvato = autoreRepository.save(nuovoAutore);
+                    autori.add(autoreSalvato);
+                } else {
+                    // Se esiste, usiamo quello trovato
+                    autori.addAll(autoriDB);
+                }
+            }
+        }
         libro.setTitolo(titolo);
         libro.setAnno(anno);
         libro.setGenere(genere);
         libro.setAutori(autori);
+
+        //Salviamo la modifica
         return mapper.convertLibroToLibroDTO(libroRepository.save(libro));
     }
 
     public List<LibroDTO> findByGenere(String nomeGenere) {
         List<Libro> libri = libroRepository.findByGenere_NomeContainingIgnoreCase(nomeGenere);
-        
+
         List<LibroDTO> libriDTO = new ArrayList<>();
         for (Libro libro : libri) {
             libriDTO.add(mapper.convertLibroToLibroDTO(libro));
         }
-        
+
         return libriDTO;
     }
 
     public List<LibroDTO> findByAutore(String nome, String cognome) {
         List<Libro> libri = libroRepository.findByAutoreNative(nome, cognome);
-        
+
         List<LibroDTO> libriDTO = new ArrayList<>();
         for (Libro libro : libri) {
             libriDTO.add(mapper.convertLibroToLibroDTO(libro));
         }
-        
+
         return libriDTO;
     }
 }
