@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import it.rotech.libreria.dto.CopiaDTO;
 import it.rotech.libreria.dto.Request.CopiaRequest;
+import it.rotech.libreria.exception.CopiaNotFoundException;
+import it.rotech.libreria.exception.LibroNotFoundException;
 import it.rotech.libreria.model.CasaEditrice;
 import it.rotech.libreria.model.Copia;
 import it.rotech.libreria.model.Libro;
@@ -40,7 +42,7 @@ public class CopiaService {
 
     public CopiaDTO findById (Integer id){
         Copia copia = copiaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Copie non trovato con ID: " + id));
+            .orElseThrow(() -> new CopiaNotFoundException("Copie non trovato con ID: " + id));
         return mapper.convertCopiaToCopiaDTO(copia);
     }
 
@@ -48,7 +50,7 @@ public class CopiaService {
         Integer numCopie= copiaRequest.getNumCopie();
         Integer idlibro= copiaRequest.getidLibro();
         String casa= copiaRequest.getCasa();
-        Libro libro = libroRepository.findById(idlibro).orElseThrow(()-> new RuntimeException("Libro non esistente!"));
+        Libro libro = libroRepository.findById(idlibro).orElseThrow(()-> new LibroNotFoundException("Libro non esistente!"));
         List <CasaEditrice> casaDB = casaEditriceRepository.findAllByNome(casa);
             if (casaDB.isEmpty())
             throw new RuntimeException("Casa Editrice non trovata, creare prima la Casa!");
@@ -61,9 +63,9 @@ public class CopiaService {
         Integer numCopie= copiaRequest.getNumCopie();
         Integer idlibro= copiaRequest.getidLibro();
         String casa= copiaRequest.getCasa();
-        Copia copia=copiaRepository.findById(id).orElseThrow(()-> new RuntimeException("Copia non esistente"));
+        Copia copia=copiaRepository.findById(id).orElseThrow(()-> new CopiaNotFoundException("Copia non esistente"));
         copia.setNumeroCopie(numCopie);
-        copia.setLibro(libroRepository.findById(idlibro).orElseThrow(()-> new RuntimeException("Libro non trovato!")));
+        copia.setLibro(libroRepository.findById(idlibro).orElseThrow(()-> new LibroNotFoundException("Libro non trovato!")));
         copia.setCasaEditrice(casaEditriceRepository.findAllByNome(casa).getLast());
         return mapper.convertCopiaToCopiaDTO(copiaRepository.save(copia));
     }

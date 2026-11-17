@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.rotech.libreria.dto.AutoreDTO;
 import it.rotech.libreria.dto.Request.AutoreRequest;
+import it.rotech.libreria.exception.AutoreNotFoundException;
 import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.repository.AutoreRepository;
 import it.rotech.libreria.utily.Mapper;
@@ -43,7 +44,7 @@ public class AutoreService {
     }
 
     public AutoreDTO findById(Integer id) {
-        Autore autore=autoreRepository.findById(id).orElseThrow(()-> new RuntimeException("Autore non esistente con questo id: " + id));
+        Autore autore=autoreRepository.findById(id).orElseThrow(()-> new AutoreNotFoundException("Autore non esistente con questo id: " + id));
         return mapper.convertAutoreToAutoreDTO(autore);
     }
 
@@ -52,7 +53,7 @@ public class AutoreService {
         String cognome= autoreRequest.getCognome();
         LocalDate dataNascita=autoreRequest.getDataNascita();
         String nazionalita=autoreRequest.getNazionalita();
-        Autore autore= autoreRepository.findById(id).orElseThrow(()->new RuntimeException("Autore con id: "+ id + " non trovato."));
+        Autore autore= autoreRepository.findById(id).orElseThrow(()->new AutoreNotFoundException("Autore con id: "+ id + " non trovato."));
         autore.setNome(nome);
         autore.setCognome(cognome);
         autore.setDataNascita(dataNascita);

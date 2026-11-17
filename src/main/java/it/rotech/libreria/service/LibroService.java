@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.dto.Request.AutoreRequest;
 import it.rotech.libreria.dto.Request.LibroRequest;
+import it.rotech.libreria.exception.LibroNotFoundException;
 import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.Genere;
 import it.rotech.libreria.model.Libro;
@@ -52,7 +53,7 @@ public class LibroService {
     // quel id
     public LibroDTO findById(Integer id) {
         Libro libro = libroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Libro non trovato con ID: " + id));
+                .orElseThrow(() -> new LibroNotFoundException("Libro non trovato con ID: " + id));
         return mapper.convertLibroToLibroDTO(libro);
     }
 
@@ -139,7 +140,7 @@ public class LibroService {
     @Transactional
     public void deleteLibroAndCopie(Integer id) {
         // devo vedere se ci sono copie del libro che voglio eliminare
-        Libro libro = libroRepository.findById(id).orElseThrow(() -> new RuntimeException("Libro non trovato!"));
+        Libro libro = libroRepository.findById(id).orElseThrow(() -> new LibroNotFoundException("Libro non trovato!"));
         copiaRepository.deleteByLibro(libro);
         libro.getAutori().clear(); // me lo gestisce hibernate, non io io come nelle @Native Query
         libroRepository.deleteById(id);
@@ -152,7 +153,7 @@ public class LibroService {
         String nomeG = libroRequest.getNomeGenere();
 
         Libro libro = libroRepository.findById(idLibro)
-                .orElseThrow(() -> new RuntimeException("Libro con id " + idLibro + " non trovato."));
+                .orElseThrow(() -> new LibroNotFoundException("Libro con id " + idLibro + " non trovato."));
         //GENERE:
         Genere genere = genereRepository.findByNomeIgnoreCase(nomeG)
                 .orElseThrow(() -> new RuntimeException("Genere non trovato, aggiungere genere prima!"));
