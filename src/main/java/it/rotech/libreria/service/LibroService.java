@@ -148,6 +148,7 @@ public class LibroService {
         libroRepository.deleteById(id);
     }
 
+    @Transactional 
     public LibroDTO modificaLibro(LibroRequest libroRequest, Integer idLibro) {
         // Vedo se il libro esiste
         String titolo = libroRequest.getTitolo();
