@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.dto.Request.AutoreRequest;
 import it.rotech.libreria.dto.Request.LibroRequest;
+import it.rotech.libreria.exception.GenereNotFoundException;
 import it.rotech.libreria.exception.LibroNotFoundException;
 import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.Genere;
@@ -156,7 +157,7 @@ public class LibroService {
                 .orElseThrow(() -> new LibroNotFoundException("Libro con id " + idLibro + " non trovato."));
         //GENERE:
         Genere genere = genereRepository.findByNomeIgnoreCase(nomeG)
-                .orElseThrow(() -> new RuntimeException("Genere non trovato, aggiungere genere prima!"));
+                .orElseThrow(() -> new GenereNotFoundException("Genere non trovato, aggiungere genere prima!"));
         
         //AUTORE:
         Set<Autore> autori = new HashSet<>();

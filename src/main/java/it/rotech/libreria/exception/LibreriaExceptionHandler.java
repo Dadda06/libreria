@@ -23,7 +23,21 @@ public class LibreriaExceptionHandler {
 
     @ExceptionHandler (CopiaNotFoundException.class)
     public ResponseEntity<String> gestisciCopiaNotFound(CopiaNotFoundException ex){
-         return ResponseEntity
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler (CasaEditriceNotFoundException.class)
+    public ResponseEntity<String> gestisciCasaEditriceNotFound(CasaEditriceNotFoundException ex){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler (GenereNotFoundException.class)
+    public ResponseEntity<String> gestisciGenereNotFound(GenereNotFoundException ex){
+        return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
     }

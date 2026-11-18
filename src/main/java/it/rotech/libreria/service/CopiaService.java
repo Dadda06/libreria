@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import it.rotech.libreria.dto.CopiaDTO;
 import it.rotech.libreria.dto.Request.CopiaRequest;
+import it.rotech.libreria.exception.CasaEditriceNotFoundException;
 import it.rotech.libreria.exception.CopiaNotFoundException;
 import it.rotech.libreria.exception.LibroNotFoundException;
 import it.rotech.libreria.model.CasaEditrice;
@@ -53,7 +54,7 @@ public class CopiaService {
         Libro libro = libroRepository.findById(idlibro).orElseThrow(()-> new LibroNotFoundException("Libro non esistente!"));
         List <CasaEditrice> casaDB = casaEditriceRepository.findAllByNome(casa);
             if (casaDB.isEmpty())
-            throw new RuntimeException("Casa Editrice non trovata, creare prima la Casa!");
+            throw new CasaEditriceNotFoundException("Casa Editrice non trovata, creare prima la Casa!");
 
         Copia copiaSalvata = new Copia(numCopie, libro, casaDB.getLast());
         return mapper.convertCopiaToCopiaDTO(copiaRepository.save(copiaSalvata));
