@@ -13,6 +13,7 @@ import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.dto.Request.AutoreRequest;
 import it.rotech.libreria.dto.Request.LibroRequest;
 import it.rotech.libreria.exception.GenereNotFoundException;
+import it.rotech.libreria.exception.LibroAlreadyExistException;
 import it.rotech.libreria.exception.LibroNotFoundException;
 import it.rotech.libreria.model.Autore;
 import it.rotech.libreria.model.Genere;
@@ -74,7 +75,7 @@ public class LibroService {
         // devo inizializzare i vari punti che mi servono per aggiungere un libro
         String titolo = libroRequest.getTitolo();
         if (libroRepository.existsByTitoloIgnoreCase(titolo)) {
-            throw new RuntimeException("Un libro con il titolo: " + titolo + ", esiste già nel database!");
+            throw new LibroAlreadyExistException("Un libro con il titolo: " + titolo + ", esiste già nel database!");
         }
 
         LocalDate anno = libroRequest.getAnno();

@@ -42,6 +42,13 @@ public class LibreriaExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler (LibroAlreadyExistException.class)
+    public ResponseEntity<String> gestisciLibroAlreadyExist(LibroAlreadyExistException ex){
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+
 
 
 
