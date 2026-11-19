@@ -3,9 +3,13 @@ package it.rotech.libreria.dto.Request;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class LibroRequest {
     private String titolo;
+    // Dico a Spring Boot di leggere la data in formato italiano giorno-mese-anno
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate anno;
     private String nomeGenere;
     private List<AutoreRequest> autori;

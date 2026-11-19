@@ -122,7 +122,7 @@ public class LibroService {
 
         /*Scriverlo così:
         {
-        "titolo":"Vieni dalle Favelas!2",
+        "titolo":"--------",
         "anno":"2026-11-16",
         "nomeGenere":"Giallo",
         "autori" : [{
