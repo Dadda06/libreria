@@ -9,6 +9,7 @@ import it.rotech.libreria.service.CopiaService;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,29 +29,30 @@ public class CopiaController {
     }
 
     @GetMapping
-    public List <CopiaDTO> getAllCopie(){
-        return copiaService.findAllCopie();
+    public ResponseEntity<List<CopiaDTO>> getAllCopie(){
+        return ResponseEntity.ok(copiaService.findAllCopie());
 
     }    
 
     @GetMapping("/{id}")
-    public CopiaDTO getCopiaById(@PathVariable  Integer id) {
-        return copiaService.findById(id);
+    public ResponseEntity<CopiaDTO> getCopiaById(@PathVariable  Integer id) {
+        return ResponseEntity.ok(copiaService.findById(id));
     }
 
     @PostMapping 
-    public CopiaDTO addCopia(@RequestBody CopiaRequest copiaRequest){
-        return copiaService.addCopia(copiaRequest);
+    public ResponseEntity<CopiaDTO> addCopia(@RequestBody CopiaRequest copiaRequest){
+        return ResponseEntity.ok(copiaService.addCopia(copiaRequest));
     }
 
     @PutMapping ("/{id}")
-    public CopiaDTO updateCopia(@PathVariable Integer id, @RequestBody CopiaRequest copiaRequest) {
-        return copiaService.updateCopia(copiaRequest, id);
+    public ResponseEntity<CopiaDTO> updateCopia(@PathVariable Integer id, @RequestBody CopiaRequest copiaRequest) {
+        return ResponseEntity.ok(copiaService.updateCopia(copiaRequest, id));
     }
     
     @DeleteMapping("/{id}")
-    public void deleteCopia(@PathVariable Integer id){
+    public ResponseEntity<String> deleteCopia(@PathVariable Integer id){
         copiaService.deleteCopia(id);
+        return ResponseEntity.ok("Copia eliminata");
     }
     
 

@@ -10,6 +10,8 @@ import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.dto.Request.LibroRequest;
 import it.rotech.libreria.service.LibroService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,42 +31,45 @@ public class LibroController {
     }
 
     @GetMapping
-    public List<LibroDTO> getAllLibri() {
-        return libroService.findAll();
+    public ResponseEntity<List<LibroDTO>> getAllLibri() {
+        return ResponseEntity.ok(libroService.findAll());
     }
 
-    @GetMapping("/id:{id}")
-    public LibroDTO getLibroById(@PathVariable Integer id) {
-        return libroService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<LibroDTO> getLibroById(@PathVariable Integer id) {
+        return ResponseEntity.ok(libroService.findById(id));
     }
 
-    @GetMapping("/titolo:{titolo}")
-    public List<LibroDTO> getLibroByTitolo(@PathVariable String titolo) {
-        return libroService.findAllByTitolo(titolo);
+    @GetMapping("/{titolo}")
+    public ResponseEntity<List<LibroDTO>> getLibroByTitolo(@PathVariable String titolo) {
+        return ResponseEntity.ok(libroService.findAllByTitolo(titolo));
     }
 
     @PostMapping
-    public LibroDTO addLibro(@RequestBody LibroRequest libroRequest) {
-        return libroService.addLibro(libroRequest);
+    public ResponseEntity<LibroDTO> addLibro(@RequestBody LibroRequest libroRequest) {
+        return ResponseEntity.ok(libroService.addLibro(libroRequest));
     }
 
-    @PutMapping("/id:{id}")
-    public LibroDTO modificaLibro(@RequestBody LibroRequest libroRequest,@PathVariable  Integer id){
-        return libroService.modificaLibro(libroRequest, id);
+    @PutMapping("/{id}")
+    public ResponseEntity<LibroDTO> modificaLibro(@RequestBody LibroRequest libroRequest,@PathVariable  Integer id){
+        return ResponseEntity.ok(libroService.modificaLibro(libroRequest, id));
     }
 
-    @DeleteMapping ("/id:{id}")
-    public void deleteLibro(@PathVariable Integer id) {
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<String> deleteLibro(@PathVariable Integer id) {
         libroService.deleteLibroAndCopie(id);
+        return ResponseEntity.ok("Libro cancellato");
     }
 
-    @GetMapping("/genere:{nomeG}")
-    public List<LibroDTO> getLibroByGenere(@PathVariable String nomeG) {
-        return libroService.findByGenere(nomeG);
+    @GetMapping("/{nomeG}")
+    public ResponseEntity<List<LibroDTO>> getLibroByGenere(@PathVariable String nomeG) {
+        return ResponseEntity.ok(libroService.findByGenere(nomeG));
     }
 
-    @GetMapping("/autore/nome:{nomeA}/cognome:{cognomeA}")
-    public List<LibroDTO> getLibroByAutore(@PathVariable String nomeA, @PathVariable String cognomeA){
-        return libroService.findByAutore(nomeA, cognomeA);
+    @GetMapping("/autore/{nomeA}/{cognomeA}")
+    public ResponseEntity<List<LibroDTO>> getLibroByAutore(@PathVariable String nomeA, @PathVariable String cognomeA){
+        //ResponseEntity.status(HttpStatus.OK).body(libroService.findByAutore(nomeA, cognomeA));
+        return ResponseEntity.ok(libroService.findByAutore(nomeA, cognomeA));
+        //si può scrivere il return in entrambe le maniere
     }
 }

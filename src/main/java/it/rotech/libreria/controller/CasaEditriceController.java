@@ -2,6 +2,7 @@ package it.rotech.libreria.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,23 +26,24 @@ public class CasaEditriceController {
     }
     
     @PostMapping
-    public CasaEditriceDTO addCasa(@RequestBody CasaEditriceRequest casaEditriceRequest) {
-        return casaEditriceService.addCasa(casaEditriceRequest);
+    public ResponseEntity<CasaEditriceDTO> addCasa(@RequestBody CasaEditriceRequest casaEditriceRequest) {
+        return ResponseEntity.ok(casaEditriceService.addCasa(casaEditriceRequest));
     }
 
     @DeleteMapping("/id:{id}")
-    public void deleteCasa(@PathVariable Integer id){
+    public ResponseEntity<String> deleteCasa(@PathVariable Integer id){
         casaEditriceService.deleteCasa(id);
+        return ResponseEntity.ok("Casa Editrice eliminata");
     }
 
     @GetMapping
-    public List<CasaEditriceDTO> getAll(){
-        return casaEditriceService.findAll();
+    public ResponseEntity<List<CasaEditriceDTO>> getAll(){
+        return ResponseEntity.ok(casaEditriceService.findAll());
     }
 
     @GetMapping("/nome:{nome}")
-    public List<CasaEditriceDTO> getByNome(@PathVariable String nome) {
-        return casaEditriceService.findByNome(nome);
+    public ResponseEntity<List<CasaEditriceDTO>> getByNome(@PathVariable String nome) {
+        return ResponseEntity.ok(casaEditriceService.findByNome(nome));
     }
     
 }

@@ -2,6 +2,7 @@ package it.rotech.libreria.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,32 +25,33 @@ public class AutoreController {
     }
 
     @GetMapping 
-    public List<AutoreDTO> getAllAutori() {
-        return autoreService.findAll();
+    public ResponseEntity<List<AutoreDTO>> getAllAutori() {
+        return ResponseEntity.ok(autoreService.findAll());
     }
 
     @PostMapping 
-    public AutoreDTO addAutore(@RequestBody AutoreRequest autoreRequest) {
-        return autoreService.addAutore(autoreRequest);
+    public ResponseEntity<AutoreDTO> addAutore(@RequestBody AutoreRequest autoreRequest) {
+        return ResponseEntity.ok(autoreService.addAutore(autoreRequest));
     }
 
     @GetMapping("/id:{id}")
-    public AutoreDTO getAutoreById(@PathVariable Integer id){
-        return autoreService.findById(id);
+    public ResponseEntity<AutoreDTO> getAutoreById(@PathVariable Integer id){
+        return ResponseEntity.ok(autoreService.findById(id));
     }
 
     @PutMapping("/id:{id}")
-    public AutoreDTO modificaAutore(@PathVariable Integer id, @RequestBody AutoreRequest autoreRequest){
-        return autoreService.modificaAutore(autoreRequest, id);
+    public ResponseEntity<AutoreDTO> modificaAutore(@PathVariable Integer id, @RequestBody AutoreRequest autoreRequest){
+        return ResponseEntity.ok(autoreService.modificaAutore(autoreRequest, id));
     }
 
     @DeleteMapping("/id:{id}")
-    public void deleteAutore(@PathVariable Integer id){
+    public ResponseEntity<String> deleteAutore(@PathVariable Integer id){
         autoreService.deleteAutore(id);
+        return ResponseEntity.ok("Autore eliminato");
     }
 
     @GetMapping("/find/{nome}/{cognome}")
-    public List<AutoreDTO> findAutoreNeC(@PathVariable  String nome,@PathVariable  String cognome) {
-        return autoreService.findByNomeECognome(nome, cognome);
+    public ResponseEntity<List<AutoreDTO>> findAutoreNeC(@PathVariable  String nome,@PathVariable  String cognome) {
+        return ResponseEntity.ok(autoreService.findByNomeECognome(nome, cognome));
     }
 }
