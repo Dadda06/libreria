@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice 
 public class LibreriaExceptionHandler {
+    
     @ExceptionHandler (LibroNotFoundException.class)
     public ResponseEntity<String> gestisciLibroNotFound(LibroNotFoundException ex){
         return ResponseEntity
