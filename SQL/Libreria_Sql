@@ -244,3 +244,12 @@ JOIN Libri_Autori ON Autori.idAutore = Libri_Autori.fk_autore
 JOIN Libri ON Libri_Autori.fk_libro = Libri.idLibro 
 JOIN Generi ON Libri.fk_genere = Generi.idGenere 
 WHERE Generi.nome = 'Fantasy';
+
+
+CREATE TABLE Utenti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(150) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO Utenti (username, password) VALUES ('Davide', '1234');
