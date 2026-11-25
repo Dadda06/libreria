@@ -10,7 +10,6 @@ import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.dto.Request.LibroRequest;
 import it.rotech.libreria.service.LibroService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
