@@ -7,28 +7,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.rotech.libreria.dto.LoginDTO;
 import it.rotech.libreria.dto.Request.LoginRequest;
 import it.rotech.libreria.service.LoginService;
 
 @RestController 
-//@RequestMapping ("/login")
+@RequestMapping ("/autenticazione")
 public class LoginController {
-    /*private LoginService loginService;
+    private LoginService loginService;
 
     public LoginController (LoginService loginService){
         this.loginService=loginService;
     }
 
-    @PostMapping 
+    @PostMapping ("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest richiesta){
-        boolean successo = loginService.verificaLogin(richiesta.getUsername(),richiesta.getPassword());
-
-        if(successo){
-            return ResponseEntity.ok("Login effettuato");
-        }else{
-            return ResponseEntity.status(401).body("Credenziali non valide");
-        }
-    }*/
+        // System.out.println(loginService.login(richiesta));
+        return ResponseEntity.ok(loginService.login(richiesta));
+    }
+    @PostMapping ("/register")
+    public ResponseEntity<LoginDTO> register(@RequestBody LoginRequest loginRequest){
+        return ResponseEntity.ok(loginService.register(loginRequest));
+    }
 
     @GetMapping("/test")
     public String testAutenticazione() {

@@ -34,7 +34,7 @@ public class LibroController {
         return ResponseEntity.ok(libroService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<LibroDTO> getLibroById(@PathVariable Integer id) {
         return ResponseEntity.ok(libroService.findById(id));
     }
