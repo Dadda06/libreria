@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.rotech.libreria.dto.LibroDTO;
 import it.rotech.libreria.dto.Request.LibroRequest;
 import it.rotech.libreria.service.LibroService;
+import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,12 +46,12 @@ public class LibroController {
     }
 
     @PostMapping
-    public ResponseEntity<LibroDTO> addLibro(@RequestBody LibroRequest libroRequest) {
+    public ResponseEntity<LibroDTO> addLibro(@Valid @RequestBody LibroRequest libroRequest) {
         return ResponseEntity.ok(libroService.addLibro(libroRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LibroDTO> modificaLibro(@RequestBody LibroRequest libroRequest,@PathVariable  Integer id){
+    public ResponseEntity<LibroDTO> modificaLibro(@Valid @RequestBody LibroRequest libroRequest,@PathVariable  Integer id){
         return ResponseEntity.ok(libroService.modificaLibro(libroRequest, id));
     }
 

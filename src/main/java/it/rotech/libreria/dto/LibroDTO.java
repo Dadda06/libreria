@@ -4,15 +4,32 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+
 
 public class LibroDTO {
 
     private Integer id;
+    
+    @NotBlank(message = "Il titolo è obbligatorio e non può essere vuoto")
     private String titolo;
-    private LocalDate anno;
-    private GenereDTO genere;
-    private Set<AutoreDTO> autori = new HashSet<>();
 
+    @NotNull(message = "La data di pubblicazione è obbligatoria")
+    @PastOrPresent(message = "La data di pubblicazione non può essere nel futuro")
+    private LocalDate anno;
+
+    @NotNull(message = "Il genere è obbligatorio")
+    @Valid // Dice a Spring di validare anche i campi interni di GenereDTO
+    private GenereDTO genere;
+
+    @NotEmpty(message = "Il libro deve avere almeno un autore")
+    @Valid // Dice a Spring di validare ogni AutoreDTO presente nel Set
+    private Set<AutoreDTO> autori = new HashSet<>();
+    
     public LibroDTO () {}
     
     public LibroDTO (String titolo, LocalDate anno, GenereDTO genere, Set<AutoreDTO> autori) {

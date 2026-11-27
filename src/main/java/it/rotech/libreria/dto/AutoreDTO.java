@@ -2,12 +2,28 @@ package it.rotech.libreria.dto;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 public class AutoreDTO {
 
     private Integer id;
+    
+    @NotBlank(message = "Il nome dell'autore è obbligatorio")
+    @Size(min = 2, max = 50, message = "Il nome deve essere compreso tra 2 e 50 caratteri")
     private String nome;
+
+    @NotBlank(message = "Il cognome dell'autore è obbligatorio")
+    @Size(min = 2, max = 50, message = "Il cognome deve essere compreso tra 2 e 50 caratteri")
     private String cognome;
+
+    @NotNull(message = "La data di nascita è obbligatoria")
+    @Past(message = "La data di nascita deve essere nel passato")
     private LocalDate dataNascita;
+
+    @NotBlank(message = "La nazionalità è obbligatoria")
     private String nazionalita;
 
     public AutoreDTO (){}

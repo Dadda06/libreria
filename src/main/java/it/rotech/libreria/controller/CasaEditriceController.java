@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.rotech.libreria.dto.CasaEditriceDTO;
 import it.rotech.libreria.dto.Request.CasaEditriceRequest;
 import it.rotech.libreria.service.CasaEditriceService;
+import jakarta.validation.Valid;
 
 
 @RestController 
@@ -26,7 +27,7 @@ public class CasaEditriceController {
     }
     
     @PostMapping
-    public ResponseEntity<CasaEditriceDTO> addCasa(@RequestBody CasaEditriceRequest casaEditriceRequest) {
+    public ResponseEntity<CasaEditriceDTO> addCasa(@Valid @RequestBody CasaEditriceRequest casaEditriceRequest) {
         return ResponseEntity.ok(casaEditriceService.addCasa(casaEditriceRequest));
     }
 

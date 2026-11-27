@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.rotech.libreria.dto.CopiaDTO;
 import it.rotech.libreria.dto.Request.CopiaRequest;
 import it.rotech.libreria.service.CopiaService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -40,12 +41,12 @@ public class CopiaController {
     }
 
     @PostMapping 
-    public ResponseEntity<CopiaDTO> addCopia(@RequestBody CopiaRequest copiaRequest){
+    public ResponseEntity<CopiaDTO> addCopia(@Valid @RequestBody CopiaRequest copiaRequest){
         return ResponseEntity.ok(copiaService.addCopia(copiaRequest));
     }
 
     @PutMapping ("/{id}")
-    public ResponseEntity<CopiaDTO> updateCopia(@PathVariable Integer id, @RequestBody CopiaRequest copiaRequest) {
+    public ResponseEntity<CopiaDTO> updateCopia(@PathVariable Integer id,@Valid  @RequestBody CopiaRequest copiaRequest) {
         return ResponseEntity.ok(copiaService.updateCopia(copiaRequest, id));
     }
     

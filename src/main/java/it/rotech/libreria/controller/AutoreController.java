@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.rotech.libreria.dto.AutoreDTO;
 import it.rotech.libreria.dto.Request.AutoreRequest;
 import it.rotech.libreria.service.AutoreService;
+import jakarta.validation.Valid;
 
 @RestController 
 @RequestMapping ("/autori")
@@ -30,7 +31,7 @@ public class AutoreController {
     }
 
     @PostMapping 
-    public ResponseEntity<AutoreDTO> addAutore(@RequestBody AutoreRequest autoreRequest) {
+    public ResponseEntity<AutoreDTO> addAutore(@Valid @RequestBody AutoreRequest autoreRequest) {
         return ResponseEntity.ok(autoreService.addAutore(autoreRequest));
     }
 
@@ -40,7 +41,7 @@ public class AutoreController {
     }
 
     @PutMapping("/id:{id}")
-    public ResponseEntity<AutoreDTO> modificaAutore(@PathVariable Integer id, @RequestBody AutoreRequest autoreRequest){
+    public ResponseEntity<AutoreDTO> modificaAutore(@PathVariable Integer id, @Valid @RequestBody AutoreRequest autoreRequest){
         return ResponseEntity.ok(autoreService.modificaAutore(autoreRequest, id));
     }
 

@@ -1,8 +1,14 @@
 package it.rotech.libreria.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class GenereDTO {
 
     private Integer id;
+    
+    @NotBlank(message = "Il nome del genere è obbligatorio")
+    @Size(min = 2, max = 50, message = "Il nome del genere deve essere compreso tra 2 e 50 caratteri")
     private String nome;
     
     public GenereDTO () {}

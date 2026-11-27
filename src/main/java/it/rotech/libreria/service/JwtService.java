@@ -14,7 +14,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
     //devo creare un algoritmo che genera una chiave segreta 
     private final SecretKey KEY = Keys.hmacShaKeyFor("LaMiaPasswordIncredibilmenteLungaESicura".getBytes());
-    private final Integer DURATA = 1800000;
+    private final Integer DURATA = 10800000;
 
 
     public String generaToken (String username){

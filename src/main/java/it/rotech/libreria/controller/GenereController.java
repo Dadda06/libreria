@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.rotech.libreria.dto.GenereDTO;
 import it.rotech.libreria.dto.Request.GenereRequest;
 import it.rotech.libreria.service.GenereService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class GenereController {
     }
 
     @PostMapping
-    public ResponseEntity<GenereDTO> addGenere(@RequestBody GenereRequest genereRequest) {
+    public ResponseEntity<GenereDTO> addGenere(@Valid  @RequestBody GenereRequest genereRequest) {
         return ResponseEntity.ok(genereService.addGenere(genereRequest));
     }
     
